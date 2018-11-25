@@ -6,5 +6,4 @@ const db = require('./db');
 
 app.listen(port, () => console.log(`** PORT ${port} **`));
 
-db.sync()
-  .then(() => db.seed());
+db.conn.sync();
