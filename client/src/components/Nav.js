@@ -22,8 +22,11 @@ class Nav extends Component {
     this.toggleDashNav = this.toggleDashNav.bind(this);
   }
 
-  componentDidMount() {
-    this.props.loadProjects(this.props.user.id);
+  componentDidUpdate(prevProps) {
+    const { loggedIn, loadProjects, user: { id } } = this.props;
+    if(prevProps.loggedIn !== loggedIn && loggedIn) {
+      loadProjects(id);
+    }
   }
 
   openModal(ev) {
@@ -111,7 +114,7 @@ const mapState = ({ user }) => ({ user, loggedIn: !!user.id });
 const mapDispatch = dispatch => {
   return {
     loadProjects: (userId) => {
-      console.log('userId::', userId);
+      // console.log('userId::', userId);
       if(userId) {
         dispatch(fetchProjectsFromServer(userId));
       }

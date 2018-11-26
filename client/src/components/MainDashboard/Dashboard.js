@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/* import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchProjectsFromServer } from '../../store';
@@ -27,4 +27,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Dashboard);
+export default connect(mapState, mapDispatch)(Dashboard); */

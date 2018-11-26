@@ -35,7 +35,7 @@ export const getUserFromToken = (token, history) => async dispatch => {
     const response = await axios.get(`/api/sessions/${token}`)
     const user = await response.data;
     dispatch(gotUser(user));
-    if(history) history.push(`/dashboard/${user.id}`);
+    // if(history) history.push(`/dashboard/${user.id}`);
     return user;
   } catch(err) {
     console.log(err);
