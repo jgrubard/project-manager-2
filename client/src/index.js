@@ -1,7 +1,9 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+
+import App from './components/App';
 
 const root = document.getElementById('root');
-const app = <hr />;
+const app = <App />;
 
-render(app, root);
+ReactDOM.render(app, root);
