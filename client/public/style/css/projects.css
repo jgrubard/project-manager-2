@@ -1,0 +1,9 @@
+.task-row {
+  display: flex; }
+
+.task-col {
+  margin-left: 5px;
+  text-align: center;
+  height: 100%;
+  flex: 1;
+  background-color: lightgray; }

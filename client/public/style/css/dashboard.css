@@ -1,0 +1,30 @@
+.dashboard-container {
+  padding-top: 85px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25%; }
+
+.dash-nav-container {
+  padding: 10px;
+  margin: 10 0;
+  background-color: #b8ddb8;
+  color: darkgreen; }
+
+.dash-nav-item {
+  display: inline;
+  margin-right: 30px; }
+
+.project-name {
+  float: right;
+  margin-right: 0px; }
+
+.row-color-white {
+  padding: 10px;
+  background-color: #fafafa; }
+
+.row-color-none {
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0); }
+
+.project-name-margin {
+  margin-left: 20px; }
