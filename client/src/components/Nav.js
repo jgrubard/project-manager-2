@@ -37,8 +37,7 @@ class Nav extends Component {
   }
 
   toggleDashNav() {
-    this.setState({ dashNavOpen: !this.state.dashNavOpen })
-    ;
+    this.setState({ dashNavOpen: !this.state.dashNavOpen });
     this.props.grabNavStatus(this.state.dashNavOpen);
   }
 

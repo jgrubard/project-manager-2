@@ -9,10 +9,8 @@ app.post('/login', async (req, res, next) => {
   const error = { status: 401 }
   try {
     const { email, password } = req.body;
-    console.log(email, password);
     const hash = await User.findPassword(email);
     const authorized = await bcrypt.compare(password, hash);
-    console.log(authorized)
     if(authorized) {
       const token = await User.authenticate(email, hash);
       return res.send(token);
@@ -37,7 +35,7 @@ app.post('/signup', async (req, res, next) => {
     const token = await User.authenticate(email, password);
     res.send(token);
   } catch(err) {
-    // console.log(err);
+    console.log(err);
     next(err);
   }
 });

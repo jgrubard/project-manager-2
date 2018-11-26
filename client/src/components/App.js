@@ -7,14 +7,13 @@ import Nav from './Nav';
 import Home from './Home';
 
 import AuthRoute from './Authorization/AuthRoute';
+import Dashboard from './MainDashboard/Dashboard';
 import MainProjectPage from './Projects/MainProjectPage';
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      dashNavOpen: false,
-    }
+    this.state = { dashNavOpen: false }
     this.grabNavStatus = this.grabNavStatus.bind(this);
   }
 
@@ -22,31 +21,25 @@ class App extends Component {
     this.setState({ dashNavOpen: status });
   }
 
-  async componentDidMount() {
-    const { loadUser, loadUsers, userId, loadProjects } = this.props;
+  componentDidMount() {
+    const { loadUser, loadUsers } = this.props;
     loadUser();
-    // loadUsers();
-    const user = await loadUsers();
-    console.log('user:', user);
-    if(user) {
-      loadProjects(user.id);
-    }
+    loadUsers();
   }
 
   render() {
 
     const AuthProject = AuthRoute(MainProjectPage);
+    const AuthDashboard = AuthRoute(Dashboard);
     const { loggedIn } = this.props;
     const checkDashNav = loggedIn && !this.state.dashNavOpen ? ' dash-nav-move' : '';
-    // console.log('checkDashNav:', checkDashNav);
-
     return (
-      
       <Router>
         <div>
           <Nav grabNavStatus={this.grabNavStatus} />
           <div className={`main-container${checkDashNav}`}>
             <Route exact path='/' render={({ history }) => <Home history={ history } />} />
+            <Route exact path='/dashboard/:userId' render={({ match }) => <AuthDashboard userId={match.params.userId * 1} />} />
             <Route exact path='/:userId/projects/:projectId' render={({ match }) => <AuthProject userId={match.params.userId * 1} projectId={match.params.projectId * 1} />} />
           </div>
         </div>
@@ -55,11 +48,7 @@ class App extends Component {
   }
 }
 
-const mapState = ({ user }) => {
-  const loggedIn = !!user.id;
-  const userId = user.id;
-  return { userId, loggedIn }
-}
+const mapState = ({ user }) => ({ loggedIn: !!user.id });
 
 const mapDispatch = dispatch => {
   return {
