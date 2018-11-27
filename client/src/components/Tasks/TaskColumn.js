@@ -9,50 +9,83 @@ import { updateTaskOnServer } from '../../store';
 class TaskColumn extends Component {
   constructor() {
     super();
-    this.state = {
-      colId: ''
-    }
+    this.state = { colId: '' };
     this.changeColumn = this.changeColumn.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onDragOver = this.onDragOver.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+    this.onDragStart = this.onDragStart.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ colId: this.props.colId });
+    const { colId } = this.props;
+    this.setState({ colId });
   }
 
   changeColumn(ev) {
-    // console.log(ev.target.value);
-    this.setState({ colId: ev.target.value * 1 });
-    // console.log('onChange:', this.state)
+    const colId = ev.target.value * 1;
+    this.setState({ colId });
   }
 
   onSubmit(ev, taskId) {
     ev.preventDefault();
-    // console.log(taskId);
-    this.props.updateTask(taskId, this.state.colId);
+    const { updateTask } = this.props;
+    const { colId } = this.state;
+    updateTask(taskId, colId);
+  }
+
+  onDragStart(ev, taskId) {
+    ev.dataTransfer.setData('taskId', taskId);
+  }
+
+  onDragOver(ev) {
+    ev.preventDefault();
+    const { colId } = this.props;
+    this.setState({ colId });
+  }
+
+  onDrop(ev) {
+    const taskId = ev.dataTransfer.getData('taskId');
+    const { updateTask } = this.props;
+    const { colId } = this.state;
+    updateTask(taskId, colId);
   }
 
   render() {
     const { name, colId, ownTasks } = this.props;
     const colIds = [1, 2, 3, 4];
-    console.log(this.state);
+    const columns = {
+      '1': 'New Tasks',
+      '2': 'In-Progress',
+      '3': 'Review',
+      '4': 'Completed'
+    }
     return (
-      <div className='task-col'>
+      <div
+        className='task-col droppable'
+        onDragOver={this.onDragOver}
+        onDrop={this.onDrop}
+      >
         <h4>{name}</h4>
         {
           ownTasks.map(task => {
             return (
-              <div key={task.id} style={{ height: '75px', backgroundColor: 'white', margin: '5px', padding: '5px' }}>
+              <div
+                draggable
+                key={task.id}
+                style={{ height: '75px', backgroundColor: 'white', margin: '5px', padding: '5px' }}
+                onDragStart={(ev) => this.onDragStart(ev, task.id)}
+              >
                 {task.name}
                 <select onChange={this.changeColumn}>
                   <option>
                     Change Column
                   </option>
                   {
-                    colIds.map(id => {
+                    Object.keys(columns).map(colNum => {
                       return (
-                        <option key={id} value={id}>
-                          {id}
+                        <option key={colNum} value={colNum}>
+                          {columns[colNum]}
                         </option>
                       );
                     })
@@ -74,10 +107,8 @@ class TaskColumn extends Component {
 
 const mapState = ({ tasks }, { colId }) => {
   const ownTasks = tasks.filter(task => task.colId === colId);
-  return {
-    ownTasks
-  }
-}
+  return { ownTasks };
+};
 
 const mapDispatch = (dispatch, { projectId }) => {
   return {
