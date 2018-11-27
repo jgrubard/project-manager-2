@@ -50,7 +50,7 @@ app.get('/:projectId/tasks', async (req, res, next) => {
   // console.log(projectId);
   try {
     // console.log(await Task.findAll());
-    const tasks = await Task.findAll()
+    const tasks = await Task.findAllFromProject(projectId);
     // console.log(tasks);
     res.send(tasks);
   } catch(err) {

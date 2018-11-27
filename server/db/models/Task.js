@@ -17,3 +17,8 @@ const Task = conn.define('task', {
 });
 
 module.exports = Task;
+
+Task.findAllFromProject = async function(projectId) {
+  const tasks = await this.findAll({ where: { projectId } });
+  return tasks;
+}

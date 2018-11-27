@@ -6,10 +6,8 @@ const fetchTasks = tasks => ({ type: FETCH_TASKS, tasks });
 const createTask = task => ({ type: CREATE_TASK, task });
 
 export const getTasksFromServer = (projectId) => async dispatch => {
-  // console.log(projectId)
   try {
     const response = await axios(`/api/projects/${projectId}/tasks`);
-    // console.log(response)
     const tasks = response.data;
     dispatch(fetchTasks(tasks));
   } catch(err) {

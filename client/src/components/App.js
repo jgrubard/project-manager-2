@@ -40,7 +40,7 @@ class App extends Component {
           <div className={`main-container${checkDashNav}`}>
             <Route exact path='/' render={({ history }) => <Home history={ history } />} />
             {/* <Route exact path='/dashboard/:userId' render={({ match }) => <AuthDashboard userId={match.params.userId * 1} />} /> */}
-            <Route exact path='/:userId/projects/:projectId' render={({ match }) => <AuthProject userId={match.params.userId * 1} projectId={match.params.projectId * 1} />} />
+            <Route exact path='/:userId/projects/:projectId' render={({ match, location }) => <AuthProject userId={match.params.userId * 1} projectId={match.params.projectId * 1} location={location}/>} />
           </div>
         </div>
       </Router>

@@ -11,14 +11,24 @@ class MainProjectPage extends Component {
   constructor() {
     super();
     this.state = {
-      modalActive: false
+      modalActive: false,
+      counter: 0
     }
     this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentDidMount() {
-    const { loadTasks, project } = this.props;
-    if(project) loadTasks(project.id);
+    const { loadTasks, projectId, location } = this.props;
+    console.log('location.state:', location.state);
+    // console.log(this.props.history.pathname);
+    if(projectId) loadTasks(projectId);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { projectId, loadTasks } = this.props;
+    if(prevProps.projectId !== projectId) {
+      loadTasks(projectId);
+    }
   }
 
   toggleModal(ev) {
@@ -62,11 +72,10 @@ class MainProjectPage extends Component {
   }
 }
 
-const mapState = ({ projects }, { projectId }) => {
+const mapState = ({ projects }, { projectId, location }) => {
+  console.log(location.pathname)
   const project = projects.find(p => p.id === projectId);
-  return {
-    project
-  }
+  return { project }
 }
 
 const mapDispatch = dispatch => {

@@ -22,9 +22,10 @@ class AllProjects extends Component {
   }
 
   render() {
-    const { projects, project } = this.props;
+    const { projects, project, userId } = this.props;
     const { isEditing } = this.state;
     const { toggleModal } = this;
+    // console.log(this.props.location.pathname);
     // if(!project) return null;
     return (
       <div>
@@ -40,7 +41,10 @@ class AllProjects extends Component {
             const color = i % 2 === 0 ? 'row-color-white' : 'row-color-none';
             return (
               <div key={p.id} className={color}>
-                <Link to={`/${this.props.userId}/projects/${p.id}`}>
+                <Link to={{
+                  pathname: `/${userId}/projects/${p.id}`,
+                  state: { prevPath: this.props.location.pathname }
+                }}>
                   <span className='project-name-margin'>
                     {p.name}
                   </span>
