@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-import { FETCH_TASKS, CREATE_TASK } from './constants';
+import { FETCH_TASKS, CREATE_TASK, UPDATE_TASK } from './constants';
 
 const fetchTasks = tasks => ({ type: FETCH_TASKS, tasks });
 const createTask = task => ({ type: CREATE_TASK, task });
+const updateTask = task => ({ type: UPDATE_TASK, task })
 
 export const getTasksFromServer = (projectId) => async dispatch => {
   try {
@@ -25,12 +26,26 @@ export const createTaskOnServer = (task) => async dispatch => {
   }
 }
 
+export const updateTaskOnServer = (taskId, colId, projectId) => async dispatch => {
+  try {
+    const response = await axios.put(`/api/projects/${projectId}/tasks/${taskId}`, { colId })
+    const task = response.data;
+    dispatch(updateTask(task));
+  } catch(err) {
+    console.log('ERROR UPDATING TASK:', err);
+  }
+}
+
 const store = (state = [], action) => {
+  let tasks;
   switch(action.type) {
     case FETCH_TASKS:
       return action.tasks;
     case CREATE_TASK:
       return [ ...state, action.task ];
+    case UPDATE_TASK:
+      tasks = state.filter(task => action.task.id !== task.id);
+      return [ ...tasks, action.task ];
     default:
       return state;
   }

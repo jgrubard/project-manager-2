@@ -47,11 +47,8 @@ app.delete('/:userId/:projectId', async (req, res, next) => {
 
 app.get('/:projectId/tasks', async (req, res, next) => {
   const { projectId } = req.params;
-  // console.log(projectId);
   try {
-    // console.log(await Task.findAll());
     const tasks = await Task.findAllFromProject(projectId);
-    // console.log(tasks);
     res.send(tasks);
   } catch(err) {
     next(err);
@@ -61,6 +58,18 @@ app.get('/:projectId/tasks', async (req, res, next) => {
 app.post('/:projectId/tasks', async (req, res, next) => {
   try {
     const task = await Task.create(req.body);
+    res.send(task);
+  } catch(err) {
+    next(err);
+  }
+});
+
+app.put('/:projectId/tasks/:taskId', async (req, res, next) => {
+  const { projectId, taskId } = req.params;
+  try {
+    const task = await Task.findById(taskId);
+    Object.assign(task, req.body);
+    await task.save();
     res.send(task);
   } catch(err) {
     next(err);
