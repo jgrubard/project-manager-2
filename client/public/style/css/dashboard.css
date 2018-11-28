@@ -14,10 +14,6 @@
   display: inline;
   margin-right: 30px; }
 
-.project-name {
-  float: right;
-  margin-right: 0px; }
-
 .row-color-white {
   padding: 10px;
   background-color: #fafafa; }
@@ -26,5 +22,9 @@
   padding: 10px;
   background-color: rgba(255, 255, 255, 0); }
 
-.project-name-margin {
-  margin-left: 20px; }
+.project-name {
+  margin-left: 10px;
+  text-decoration: none;
+  color: darkgreen; }
+  .project-name:hover {
+    color: #2b862b; }

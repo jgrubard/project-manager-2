@@ -29,14 +29,14 @@ class EditProject extends Component {
 
   onSubmit(ev) {
     ev.preventDefault();
-    const { project: { id }, updateProject, userId, toggleModal } = this.props;
+    const { project: { id }, updateProject, userId, toggleProjectModal } = this.props;
     const { name, usersToAdd, usersToRemove } = this.state;
     const addUserIds = usersToAdd.map(user => user.id);
     // console.log('ON SUBMIT', usersToAdd, usersToRemove); // works here
     const removeUserIds = usersToRemove.map(user => user.id);
     // console.log('ON SUBMIT', addUserIds, removeUserIds); // works here
     updateProject({ id, name }, userId, addUserIds, removeUserIds);
-    toggleModal();
+    toggleProjectModal();
   }
 
   addUser(user) {
@@ -73,14 +73,14 @@ class EditProject extends Component {
   }
 
   render() {
-    const { toggleModal, project, deleteProject, userId } = this.props;
+    const { toggleProjectModal, project, deleteProject, userId } = this.props;
     const { name, usersToAdd, usersToRemove, creatorId } = this.state;
     const { handleChange, onSubmit, addUser, removeUser } = this;
     return (
       <div className='modal-container modal-project'>
         <div className='button-close'>
           <CloseButton
-            onClick={toggleModal}
+            onClick={toggleProjectModal}
             label='X'
             active={true}
           />
@@ -132,7 +132,7 @@ class EditProject extends Component {
         />
         <Button
           label='Delete Project'
-          onClick={() => deleteProject(project.id, userId, toggleModal)}
+          onClick={() => deleteProject(project.id, userId, toggleProjectModal)}
           active={true}
           long={true}
           type={'danger'}
@@ -152,9 +152,9 @@ const mapState = ({ user, users }) => {
 const mapDispatch = dispatch => {
   return {
     updateProject: (project, userId, usersToAdd, usersToRemove) => dispatch(updateProjectOnServer(project, userId, usersToAdd, usersToRemove)),
-    deleteProject: async (projectId, userId, toggleModal) => {
+    deleteProject: async (projectId, userId, toggleProjectModal) => {
       dispatch(deleteProjectFromServer(projectId, userId));
-      await toggleModal();
+      await toggleProjectModal();
     },
     loadProjectUsers: (projectId, userId) => dispatch(getAllUsersOnProjectFromServer(projectId, userId))
   }

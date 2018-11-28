@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import TaskColumn from '../Tasks/TaskColumn';
 import CreateTask from '../Tasks/CreateTask';
+import EditProject from './EditProject';
 import { getTasksFromServer } from '../../store';
 
 import { Button } from '../Library';
@@ -11,16 +12,16 @@ class MainProjectPage extends Component {
   constructor() {
     super();
     this.state = {
-      modalActive: false,
+      taskModalActive: false,
+      projectModalActive: false,
       counter: 0
     }
     this.toggleModal = this.toggleModal.bind(this);
+    this.toggleProjectModal = this.toggleProjectModal.bind(this);
   }
 
   componentDidMount() {
-    const { loadTasks, projectId, location } = this.props;
-    console.log('location.state:', location.state);
-    // console.log(this.props.history.pathname);
+    const { loadTasks, projectId } = this.props;
     if(projectId) loadTasks(projectId);
   }
 
@@ -33,19 +34,24 @@ class MainProjectPage extends Component {
 
   toggleModal(ev) {
     ev.preventDefault();
-    this.setState({ modalActive: !this.state.modalActive });
+    const { taskModalActive } = this.state;
+    this.setState({ taskModalActive: !taskModalActive });
+  }
+
+  toggleProjectModal() {
+    const { projectModalActive } = this.state;
+    this.setState({ projectModalActive: !projectModalActive });
   }
 
   render() {
-    const { project, toggleDashboard, showDash } = this.props;
-    const { toggleModal } = this;
-    const toggleMessage = showDash ? 'hide' : 'show';
+    const { project } = this.props;
+    const { toggleModal, toggleProjectModal } = this;
     if(!project) return null;
     return (
       <div style={{ padding: '10', marginTop: '75px' }}>
         <div>
           <h2>Main Project Page: {project.name}</h2>
-          <span style={{ cursor: 'pointer' }} onClick={toggleDashboard}>({toggleMessage} dashboard menu)</span>
+          <span onClick={toggleProjectModal} style={{ float: 'right', color: 'darkgreen', cursor: 'pointer' }} className='fas fa-cog'></span>
           <Button
             label='New Task'
             onClick={toggleModal}
@@ -60,10 +66,14 @@ class MainProjectPage extends Component {
         </div>
         <div>
         {
-          this.state.modalActive &&
+          this.state.taskModalActive &&
             <div className='modal-container modal-project'>
               <CreateTask toggleModal={toggleModal} project={project} />
             </div>
+        }
+        {
+          this.state.projectModalActive &&
+            <EditProject toggleProjectModal={toggleProjectModal} project={project}/>
         }
         </div>
 
@@ -72,8 +82,7 @@ class MainProjectPage extends Component {
   }
 }
 
-const mapState = ({ projects }, { projectId, location }) => {
-  console.log(location.pathname)
+const mapState = ({ projects }, { projectId }) => {
   const project = projects.find(p => p.id === projectId);
   return { project }
 }

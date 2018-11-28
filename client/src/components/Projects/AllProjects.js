@@ -1,53 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import ProjectForm from './ProjectForm';
-import EditProject from './EditProject';
 
 class AllProjects extends Component {
   constructor() {
     super();
-    this.state = {
-      isEditing: false,
-      project: ''
-    }
-    this.toggleModal = this.toggleModal.bind(this);
-  }
-
-  toggleModal(project) {
-    const  { isEditing } = this.state;
-    project ? project : '';
-    this.setState({ isEditing: !isEditing, project });
   }
 
   render() {
-    const { projects, project, userId } = this.props;
-    const { isEditing } = this.state;
-    const { toggleModal } = this;
-    // console.log(this.props.location.pathname);
-    // if(!project) return null;
+    const { projects, userId } = this.props;
     return (
       <div>
       <div>
         <h2>All Projects</h2>
-        {
-          isEditing &&
-            <EditProject toggleModal={toggleModal} project={project}/>
-        }
         <ProjectForm />
         {
           projects.map((p, i) => {
             const color = i % 2 === 0 ? 'row-color-white' : 'row-color-none';
             return (
               <div key={p.id} className={color}>
-                <Link to={{
-                  pathname: `/${userId}/projects/${p.id}`,
-                  state: { prevPath: this.props.location.pathname }
-                }}>
-                  <span className='project-name-margin'>
+                <Link to={`/${userId}/projects/${p.id}`} className='project-name'>
+                  {/* <span className='project-name-container'> */}
                     {p.name}
-                  </span>
+                  {/* </span> */}
                 </Link>
               </div>
             );
@@ -66,4 +43,4 @@ const mapState = ({ projects, user }) => {
 
 const mapDispatch = null;
 
-export default withRouter(connect(mapState, mapDispatch)(AllProjects));
+export default connect(mapState, mapDispatch)(AllProjects);
