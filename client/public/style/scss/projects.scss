@@ -1,5 +1,6 @@
 .task-row {
   display: flex;
+  margin-top: 10px;
 }
 
 .task-col {
@@ -9,4 +10,17 @@
   height: 100%;
   flex: 1;
   background-color: lightgray;
+}
+
+.project-nav {
+  background-color: white;
+  padding: 10px;
+}
+
+.project-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: darkgreen;
+  margin-left: 5px;
+  margin-right: 10px;
 }

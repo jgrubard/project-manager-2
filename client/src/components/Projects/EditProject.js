@@ -130,13 +130,16 @@ class EditProject extends Component {
           active={true}
           long={true}
         />
-        <Button
-          label='Delete Project'
-          onClick={() => deleteProject(project.id, userId, toggleProjectModal)}
-          active={true}
-          long={true}
-          type={'danger'}
-        />
+        {
+          userId === creatorId &&
+            <Button
+              label='Delete Project'
+              onClick={() => deleteProject(project.id, userId, toggleProjectModal)}
+              active={true}
+              long={true}
+              type={'danger'}
+            />
+        }
       </div>
     );
   }

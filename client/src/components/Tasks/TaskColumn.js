@@ -77,7 +77,7 @@ class TaskColumn extends Component {
                 onDragStart={(ev) => this.onDragStart(ev, task.id)}
               >
                 {task.name}
-                <select onChange={this.changeColumn}>
+                {/* <select onChange={this.changeColumn}>
                   <option>
                     Change Column
                   </option>
@@ -90,12 +90,12 @@ class TaskColumn extends Component {
                       );
                     })
                   }
-                </select>
+                </select> 
                 <Button
                   label='Update'
                   onClick={(ev) => this.onSubmit(ev, task.id)}
                   active={true}
-                />
+                /> */}
               </div>
             );
           })

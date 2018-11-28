@@ -3,6 +3,7 @@ $inactive-button: rgb(114, 175, 114);
 $active-button: rgb(0, 100, 0);
 
 .button {
+  cursor: pointer;
   width: 110px;
   background-color: $active-button;
   color: white;

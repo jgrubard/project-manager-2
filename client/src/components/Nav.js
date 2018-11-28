@@ -62,12 +62,12 @@ class Nav extends Component {
                 <Logout closeModal={closeModal} />
               </div>
           }
-          {
+          {/* {
             loggedIn &&
               <div className='nav-item nav-text' onClick={this.toggleDashNav} style={{ cursor: 'pointer' }}>
                 <span className='nav-link'>Settings</span>
               </div>
-          }
+          } */}
           {
             loggedIn &&
               <div className='nav-item nav-text'>

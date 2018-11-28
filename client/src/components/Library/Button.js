@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Button = ({ onClick, label, active, long, disabled, type }) => {
+const Button = ({ onClick, label, active, long, disabled, type, style }) => {
+  style = style ? style : {};
   return (
     <button
       className={`
@@ -12,6 +13,7 @@ const Button = ({ onClick, label, active, long, disabled, type }) => {
       `}
       onClick={onClick}
       disabled={disabled ? disabled : false}
+      style={style}
     >
       {label}
     </button>

@@ -49,13 +49,21 @@ class MainProjectPage extends Component {
     if(!project) return null;
     return (
       <div style={{ padding: '10', marginTop: '75px' }}>
-        <div>
-          <h2>Project: {project.name}</h2>
-          <span onClick={toggleProjectModal} style={{ float: 'right', color: 'darkgreen', cursor: 'pointer' }} className='fas fa-cog'></span>
+        <div className='project-nav'>
+          <span className='project-title'>{project.name}</span>
+          {/* <span onClick={toggleProjectModal} style={{ float: 'right', color: 'darkgreen', cursor: 'pointer' }} className='fas fa-cog'></span> */}
+          <Button
+            label='Project Settings'
+            onClick={toggleProjectModal}
+            active={true}
+            long={true}
+            style={{ float: 'right' }}
+          />
           <Button
             label='New Task'
             onClick={toggleModal}
             active={true}
+            style={{ float: 'right' }}
           />
         </div>
         <div className='task-row'>
