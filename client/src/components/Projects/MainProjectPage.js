@@ -50,7 +50,7 @@ class MainProjectPage extends Component {
     return (
       <div style={{ padding: '10', marginTop: '75px' }}>
         <div>
-          <h2>Main Project Page: {project.name}</h2>
+          <h2>Project: {project.name}</h2>
           <span onClick={toggleProjectModal} style={{ float: 'right', color: 'darkgreen', cursor: 'pointer' }} className='fas fa-cog'></span>
           <Button
             label='New Task'

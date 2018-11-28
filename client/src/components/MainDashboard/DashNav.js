@@ -14,9 +14,6 @@ class DashNav extends Component {
       <div className={`dash-nav`}>
         <br />
         <br />
-        <div className='dash-nav-item'>
-          Dash Nav
-        </div>
         <AllProjects />
       </div>
     );

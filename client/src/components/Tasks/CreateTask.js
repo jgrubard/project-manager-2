@@ -52,6 +52,7 @@ class CreateTask extends Component {
           name='name'
           value={name}
         />
+        <br />
         <Input
           placeholder='Description'
           onChange={handleChange}

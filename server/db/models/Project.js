@@ -3,7 +3,11 @@ const { Sequelize } = conn;
 
 const Project = conn.define('project', {
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   }
 }, {
   timestamps: false

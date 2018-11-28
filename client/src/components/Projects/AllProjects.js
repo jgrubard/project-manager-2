@@ -14,8 +14,12 @@ class AllProjects extends Component {
     return (
       <div>
       <div>
-        <h2>All Projects</h2>
         <ProjectForm />
+        <br />
+        <hr />
+        <br />
+        <h4>All Projects</h4>
+        <br />
         {
           projects.map((p, i) => {
             const color = i % 2 === 0 ? 'row-color-white' : 'row-color-none';
