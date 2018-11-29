@@ -65,12 +65,23 @@ app.post('/:projectId/tasks', async (req, res, next) => {
 });
 
 app.put('/:projectId/tasks/:taskId', async (req, res, next) => {
-  const { projectId, taskId } = req.params;
+  const { taskId } = req.params;
   try {
     const task = await Task.findById(taskId);
     Object.assign(task, req.body);
     await task.save();
     res.send(task);
+  } catch(err) {
+    next(err);
+  }
+});
+
+app.delete('/:projectId/tasks/:taskId', async (req, res, next) => {
+  const { taskId } = req.params;
+  try {
+    const task = await Task.findById(taskId);
+    await task.destroy();
+    res.sendStatus(204);
   } catch(err) {
     next(err);
   }

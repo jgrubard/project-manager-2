@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Button } from '../Library';
 
-import { updateTaskOnServer } from '../../store';
+import { updateTaskOnServer, deleteTaskFromServer } from '../../store';
 
 class TaskColumn extends Component {
   constructor() {
@@ -52,7 +52,7 @@ class TaskColumn extends Component {
   }
 
   render() {
-    const { name, colId, ownTasks } = this.props;
+    const { name, colId, ownTasks, deleteTask } = this.props;
     const colIds = [1, 2, 3, 4];
     const columns = {
       '1': 'New Tasks',
@@ -62,40 +62,28 @@ class TaskColumn extends Component {
     }
     return (
       <div
-        className='task-col droppable'
+        className='task-col'
         onDragOver={this.onDragOver}
         onDrop={this.onDrop}
       >
-        <h4>{name}</h4>
+        <h4 className='task-col-title'>{name}</h4>
         {
           ownTasks.map(task => {
             return (
               <div
                 draggable
                 key={task.id}
-                style={{ height: '75px', backgroundColor: 'white', margin: '5px', padding: '5px' }}
+                className='task-container'
                 onDragStart={(ev) => this.onDragStart(ev, task.id)}
               >
                 {task.name}
-                {/* <select onChange={this.changeColumn}>
-                  <option>
-                    Change Column
-                  </option>
-                  {
-                    Object.keys(columns).map(colNum => {
-                      return (
-                        <option key={colNum} value={colNum}>
-                          {columns[colNum]}
-                        </option>
-                      );
-                    })
-                  }
-                </select> 
+                <br />
                 <Button
-                  label='Update'
-                  onClick={(ev) => this.onSubmit(ev, task.id)}
+                  label='delete'
+                  onClick={() => deleteTask(task.id)}
                   active={true}
-                /> */}
+                  type='danger'
+                />
               </div>
             );
           })
@@ -112,7 +100,8 @@ const mapState = ({ tasks }, { colId }) => {
 
 const mapDispatch = (dispatch, { projectId }) => {
   return {
-    updateTask: (taskId, colId) => dispatch(updateTaskOnServer(taskId, colId, projectId))
+    updateTask: (taskId, colId) => dispatch(updateTaskOnServer(taskId, colId, projectId)),
+    deleteTask: (taskId) => dispatch(deleteTaskFromServer(taskId, projectId))
   }
 };
 

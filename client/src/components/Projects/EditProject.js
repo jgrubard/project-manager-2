@@ -32,9 +32,7 @@ class EditProject extends Component {
     const { project: { id }, updateProject, userId, toggleProjectModal } = this.props;
     const { name, usersToAdd, usersToRemove } = this.state;
     const addUserIds = usersToAdd.map(user => user.id);
-    // console.log('ON SUBMIT', usersToAdd, usersToRemove); // works here
     const removeUserIds = usersToRemove.map(user => user.id);
-    // console.log('ON SUBMIT', addUserIds, removeUserIds); // works here
     updateProject({ id, name }, userId, addUserIds, removeUserIds);
     toggleProjectModal();
   }

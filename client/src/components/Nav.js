@@ -114,7 +114,6 @@ const mapState = ({ user }) => ({ user, loggedIn: !!user.id });
 const mapDispatch = dispatch => {
   return {
     loadProjects: (userId) => {
-      // console.log('userId::', userId);
       if(userId) {
         dispatch(fetchProjectsFromServer(userId));
       }

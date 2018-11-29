@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TaskColumn from '../Tasks/TaskColumn';
 import CreateTask from '../Tasks/CreateTask';
 import EditProject from './EditProject';
-import { getTasksFromServer } from '../../store';
+import { getTasksFromServer, clearTasks } from '../../store';
 
 import { Button } from '../Library';
 
@@ -23,6 +23,10 @@ class MainProjectPage extends Component {
   componentDidMount() {
     const { loadTasks, projectId } = this.props;
     if(projectId) loadTasks(projectId);
+  }
+
+  componentWillUnmount() {
+    this.props.clearTasks();
   }
 
   componentDidUpdate(prevProps) {
@@ -48,7 +52,7 @@ class MainProjectPage extends Component {
     const { toggleModal, toggleProjectModal } = this;
     if(!project) return null;
     return (
-      <div style={{ padding: '10', marginTop: '75px' }}>
+      <div className='main-page-container'>
         <div className='project-nav'>
           <span className='project-title'>{project.name}</span>
           {/* <span onClick={toggleProjectModal} style={{ float: 'right', color: 'darkgreen', cursor: 'pointer' }} className='fas fa-cog'></span> */}
@@ -97,7 +101,8 @@ const mapState = ({ projects }, { projectId }) => {
 
 const mapDispatch = dispatch => {
   return {
-    loadTasks: (projectId) => dispatch(getTasksFromServer(projectId))
+    loadTasks: (projectId) => dispatch(getTasksFromServer(projectId)),
+    clearTasks: () => dispatch(clearTasks())
   }
 }
 

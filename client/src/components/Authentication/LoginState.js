@@ -71,6 +71,7 @@ class LoginState extends Component {
           onChange={onChangeInput}
         />
         { errors.email && <p className='form-validation'>{errors.email}</p>}
+        <br />
         <Input
           type='password'
           placeholder='password'

@@ -29,8 +29,11 @@ app.get('/:token', async (req, res, next) => {
 });
 
 app.post('/signup', async (req, res, next) => {
+  const { email, password } = req.body;
+  const hashedPassword = bcrypt.hashSync(password, salt);
+  const body = { email, password: hashedPassword };
   try {
-    const user = await User.create(req.body);
+    const user = await User.create(body);
     const { email, password } = user;
     const token = await User.authenticate(email, password);
     res.send(token);

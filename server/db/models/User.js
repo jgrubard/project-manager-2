@@ -15,6 +15,14 @@ const User = conn.define('user', {
   password: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: true
   }
 }, {
   timestamps: false

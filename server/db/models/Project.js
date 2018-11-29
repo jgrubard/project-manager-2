@@ -17,13 +17,7 @@ Project.findAllForUser = async function(userId) {
   const userProjects = await conn.models.user_project.findAll({ where: { userId }});
   const projectIds = userProjects.map(up => up.projectId);
   let projects = projectIds.map(async id => {
-    return await this.findOne({ 
-      where: { id },
-      // include: [{
-      //   model: conn.models.task,
-      //   as: 'tasks'
-      // }]
-    });
+    return await this.findOne({ where: { id }});
   });
   return Promise.all(projects);
 }

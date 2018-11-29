@@ -68,6 +68,7 @@ class SignupState extends Component {
             onChange={onChangeInput}
           />
           { errors.email && <div className='form-validation'>{errors.email}</div> }
+          <br />
           <Input
             type='password'
             placeholder='password'
@@ -76,6 +77,7 @@ class SignupState extends Component {
             onChange={onChangeInput}
           />
           { errors.password1 && <div className='form-validation'>{errors.password1}</div> }
+          <br />
           <Input
             type='password'
             placeholder='confirm password'

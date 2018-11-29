@@ -7,6 +7,7 @@ const salt = bcrypt.genSaltSync(10);
 
 const jeremyPassword = bcrypt.hashSync(process.env.JG_PW, salt);
 const suPassword = bcrypt.hashSync(process.env.SS_PW, salt);
+const marioPassword = bcrypt.hashSync('mario', salt);
 
 const seed = () => {
   return Promise.all([
@@ -20,7 +21,7 @@ const seed = () => {
     }),
     User.create({
       email: 'mario@gmail.com',
-      password: 'mario'
+      password: marioPassword
     })
   ])
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { GOT_USER } from './constants';
 import { addUser } from './users';
 
-const gotUser = user => ({ type: GOT_USER, user });
+export const gotUser = user => ({ type: GOT_USER, user });
 
 export const signup = (credentials) => async dispatch => {
   try {

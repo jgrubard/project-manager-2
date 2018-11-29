@@ -3,7 +3,7 @@ import React from 'react';
 const Home = () => {
   return (
     <div>
-      <div style={{ padding: '10', marginTop: '75px' }}>
+      <div className='main-page-container'>
         <h2>Project Manager</h2>
         { lorem.map((p, i) => <p style={{ margin: '10 0' }} key={i}>{p}</p>) }
       </div>

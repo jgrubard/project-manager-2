@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-import { FETCH_TASKS, CREATE_TASK, UPDATE_TASK } from './constants';
+import { FETCH_TASKS, CREATE_TASK, UPDATE_TASK, DELETE_TASK } from './constants';
 
 const fetchTasks = tasks => ({ type: FETCH_TASKS, tasks });
 const createTask = task => ({ type: CREATE_TASK, task });
-const updateTask = task => ({ type: UPDATE_TASK, task })
+const updateTask = task => ({ type: UPDATE_TASK, task });
+const deleteTask = taskId => ({ type: DELETE_TASK, taskId });
 
 export const getTasksFromServer = (projectId) => async dispatch => {
   try {
@@ -36,6 +37,23 @@ export const updateTaskOnServer = (taskId, colId, projectId) => async dispatch =
   }
 }
 
+export const deleteTaskFromServer = (taskId, projectId) => async dispatch => {
+  try {
+    await axios.delete(`/api/projects/${projectId}/tasks/${taskId}`);
+    await dispatch(deleteTask(taskId));
+  } catch(err) {
+    console.log('ERROR DELETING TASK:', err);
+  }
+}
+
+export const clearTasks = () => dispatch => {
+  try {
+    dispatch(fetchTasks([]))
+  } catch(err) {
+    console.log('ERROR CLEARING TASKS:', err);
+  }
+}
+
 const store = (state = [], action) => {
   let tasks;
   switch(action.type) {
@@ -46,6 +64,8 @@ const store = (state = [], action) => {
     case UPDATE_TASK:
       tasks = state.filter(task => action.task.id !== task.id);
       return [ ...tasks, action.task ];
+    case DELETE_TASK:
+      return state.filter(task => action.taskId !== task.id);
     default:
       return state;
   }

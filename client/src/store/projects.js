@@ -10,9 +10,7 @@ const deleteProject = id => ({ type: DELETE_PROJECT, id });
 export const fetchProjectsFromServer = (userId) => async dispatch => {
   if(!userId) return null;
   try {
-    // console.log(userId)
     const response = await axios.get(`/api/projects/${userId}`);
-    // console.log(response)
     const projects = await response.data;
     await dispatch(fetchProjects(projects));
   } catch(err) {

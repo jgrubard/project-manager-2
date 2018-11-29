@@ -13,3 +13,7 @@ body .main-container {
 
 .dash-nav-move {
   margin-left: 210px; }
+
+.main-page-container {
+  padding: 10px;
+  margin-top: 55px; }
