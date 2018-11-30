@@ -10,6 +10,9 @@
   outline: none;
   border: none; }
 
+.input-textarea {
+  height: 100px; }
+
 .center {
   text-align: center; }
 

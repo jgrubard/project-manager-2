@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 
 import { Button } from '../Library';
 
+
 import { updateTaskOnServer, deleteTaskFromServer } from '../../store';
+
+import TaskCard from './TaskCard';
+import TaskForm from './TaskForm';
 
 class TaskColumn extends Component {
   constructor() {
@@ -48,7 +52,7 @@ class TaskColumn extends Component {
     const taskId = ev.dataTransfer.getData('taskId');
     const { updateTask } = this.props;
     const { colId } = this.state;
-    updateTask(taskId, colId);
+    updateTask(taskId, { colId });
   }
 
   render() {
@@ -70,20 +74,8 @@ class TaskColumn extends Component {
         {
           ownTasks.map(task => {
             return (
-              <div
-                draggable
-                key={task.id}
-                className='task-container'
-                onDragStart={(ev) => this.onDragStart(ev, task.id)}
-              >
-                {task.name}
-                <br />
-                <Button
-                  label='delete'
-                  onClick={() => deleteTask(task.id)}
-                  active={true}
-                  type='danger'
-                />
+              <div key={task.id}>
+                <TaskCard task={task} onDragStart={this.onDragStart}/>
               </div>
             );
           })
@@ -100,8 +92,8 @@ const mapState = ({ tasks }, { colId }) => {
 
 const mapDispatch = (dispatch, { projectId }) => {
   return {
-    updateTask: (taskId, colId) => dispatch(updateTaskOnServer(taskId, colId, projectId)),
-    deleteTask: (taskId) => dispatch(deleteTaskFromServer(taskId, projectId))
+    updateTask: (taskId, task) => dispatch(updateTaskOnServer(taskId, task, projectId)),
+    // deleteTask: (taskId) => dispatch(deleteTaskFromServer(taskId, projectId))
   }
 };
 

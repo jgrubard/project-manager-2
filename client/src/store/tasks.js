@@ -27,9 +27,9 @@ export const createTaskOnServer = (task) => async dispatch => {
   }
 }
 
-export const updateTaskOnServer = (taskId, colId, projectId) => async dispatch => {
+export const updateTaskOnServer = (taskId, updatedTask, projectId) => async dispatch => {
   try {
-    const response = await axios.put(`/api/projects/${projectId}/tasks/${taskId}`, { colId })
+    const response = await axios.put(`/api/projects/${projectId}/tasks/${taskId}`, updatedTask)
     const task = response.data;
     dispatch(updateTask(task));
   } catch(err) {

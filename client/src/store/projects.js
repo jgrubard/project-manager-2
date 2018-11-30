@@ -14,7 +14,7 @@ export const fetchProjectsFromServer = (userId) => async dispatch => {
     const projects = await response.data;
     await dispatch(fetchProjects(projects));
   } catch(err) {
-    console.log('ERROR GETTING PRODUCTS ON CLIENT', err);
+    console.log('ERROR GETTING PROJECTS ON CLIENT', err);
   }
 }
 
