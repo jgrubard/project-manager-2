@@ -1,0 +1,69 @@
+.nav {
+  padding: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #b8ddb8;
+  box-shadow: 0px 2px 6px rgba(80, 80, 80, 0.5);
+  z-index: 2; }
+
+.nav-brand {
+  float: left;
+  padding: 12px; }
+
+.nav-brand-link {
+  color: darkgreen;
+  text-decoration: none;
+  font-size: 14pt;
+  font-weight: bold; }
+  .nav-brand-link:hover {
+    color: #1f861f; }
+
+.nav-link {
+  color: darkgreen;
+  text-decoration: none;
+  font-size: 12pt;
+  font-weight: bold; }
+  .nav-link:hover {
+    color: #1f861f; }
+
+.nav-item {
+  float: right;
+  margin-top: 10px;
+  margin-right: 12px; }
+
+.nav-text {
+  float: right;
+  font-size: 14;
+  margin-top: 15px;
+  margin-right: 12px; }
+
+.dash-nav {
+  position: fixed;
+  padding-top: 60px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 200px;
+  height: 100%;
+  background-color: #b8ddb8;
+  z-index: 0;
+  opacity: 1;
+  box-shadow: 2px 0px 6px rgba(80, 80, 80, 0.5); }
+
+.toggle-dash-nav {
+  cursor: pointer;
+  padding: 5px;
+  position: fixed;
+  z-index: 1;
+  margin-top: 50px;
+  margin-left: 35px;
+  width: 125px;
+  height: 20px;
+  background-color: darkgreen;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  opacity: 0.2; }
+  .toggle-dash-nav:hover {
+    opacity: 1; }

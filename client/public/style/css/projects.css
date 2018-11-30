@@ -1,0 +1,46 @@
+.task-row {
+  display: flex;
+  margin-top: 10px; }
+
+.task-col {
+  margin-left: 5px;
+  text-align: center;
+  height: 82.5%;
+  flex: 1;
+  background-color: lightgray;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  border-radius: 5px; }
+
+.task-col-title {
+  background-color: grey;
+  padding: 5px;
+  margin: 5px;
+  color: white; }
+
+.project-nav {
+  background-color: white;
+  padding: 10px; }
+
+.project-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: darkgreen;
+  margin-left: 5px;
+  margin-right: 10px; }
+
+.task-container {
+  cursor: pointer;
+  height: 75px;
+  background-color: white;
+  margin: 5px;
+  padding: 5px;
+  color: 'darkgreen';
+  border-radius: 5px;
+  border-style: dashed;
+  border-color: darkgrey;
+  border-width: 1px;
+  box-shadow: 0px 0px 10px rgba(60, 60, 60, 0.4); }
+  .task-container:hover {
+    background-color: #d7f8d7; }

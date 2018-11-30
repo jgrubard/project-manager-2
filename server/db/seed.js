@@ -1,19 +1,27 @@
-const User = require('./models/User');
+require('dotenv').config();
 const conn = require('./conn');
+const { User } = require('./index').models;
+
+const bcrypt = require('bcryptjs');
+const salt = bcrypt.genSaltSync(10);
+
+const jeremyPassword = bcrypt.hashSync(process.env.JG_PW, salt);
+const suPassword = bcrypt.hashSync(process.env.SS_PW, salt);
+const marioPassword = bcrypt.hashSync('mario', salt);
 
 const seed = () => {
   return Promise.all([
     User.create({
       email: 'jgrubard@gmail.com',
-      password: 'jeremy'
+      password: jeremyPassword
     }),
     User.create({
       email: 'su@gmail.com',
-      password: 'su'
+      password: suPassword
     }),
     User.create({
       email: 'mario@gmail.com',
-      password: 'mario'
+      password: marioPassword
     })
   ])
 }
@@ -33,6 +41,3 @@ conn.sync({ force: true })
   .catch(err => {
     console.log('Error Seeding', err);
   });
-
-
-

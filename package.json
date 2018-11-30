@@ -4,12 +4,12 @@
   "description": "Project Management Application",
   "main": "index.js",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/jgrubard/project-manager-2"
+    "type": "git",
+    "url": "https://github.com/jgrubard/project-manager-2"
   },
   "scripts": {
     "webpack": "webpack",
-    "scss": "node-sass --watch",
+    "scss": "node-sass --watch client/public/style/scss -o client/public/style/css",
     "seed": "node server/db/seed.js",
     "start:dev": "npm run webpack -- -w & nodemon server/index.js --ignore dist/ --ignore client/src & npm run scss"
   },
