@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { deleteTaskFromServer } from '../../store';
-import TaskForm from './TaskForm';
 
 import { Button } from '../Library';
+import TaskForm from './TaskForm';
 
 class TaskCard extends Component {
   constructor() {
@@ -20,14 +18,12 @@ class TaskCard extends Component {
   }
 
   render() {
-    const { task, deleteTask, onDragStart } = this.props; 
+    const { task, onDragStart } = this.props;
+    const { showTaskModal } = this.state;
     const { toggleModal } = this;
     return (
       <div>
-        {
-          this.state.showTaskModal &&
-            <TaskForm task={task} toggleModal={toggleModal} />
-        }
+        { showTaskModal && <TaskForm task={task} toggleModal={toggleModal} /> }
         <div
           draggable
           className='task-container'
@@ -47,7 +43,4 @@ class TaskCard extends Component {
   }
 }
 
-const mapState = null;
-const mapDispatch = null;
-
-export default connect(mapState, mapDispatch)(TaskCard);
+export default TaskCard;

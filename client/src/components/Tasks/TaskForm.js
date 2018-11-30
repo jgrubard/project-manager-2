@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { CloseButton, Button, Input } from '../Library';
-
 import { connect } from 'react-redux';
 
+import { CloseButton, Button, Input } from '../Library';
 import { updateTaskOnServer, deleteTaskFromServer } from '../../store';
 
 class TaskForm extends Component {
@@ -25,13 +24,13 @@ class TaskForm extends Component {
   async onSubmit(ev) {
     ev.preventDefault();
     const { name, description } = this.state;
-    const { task: { id, projectId }, toggleModal } = this.props;
-    await this.props.updateTask(id, { name, description }, projectId);
+    const { task: { id, projectId }, toggleModal, updateTask } = this.props;
+    await updateTask(id, { name, description }, projectId);
     toggleModal();
   }
 
   render() {
-    const { toggleModal, task } = this.props;
+    const { toggleModal, task, deleteTask } = this.props;
     const { name, description } = this.state;
     const { handleChange } = this;
     return (
@@ -67,7 +66,7 @@ class TaskForm extends Component {
         />
         <Button
           label='delete'
-          onClick={() => this.props.deleteTask(task.id, task.projectId)}
+          onClick={() => deleteTask(task.id, task.projectId)}
           active={true}
           type='danger'
         />

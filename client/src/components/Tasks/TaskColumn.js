@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 
-import { Button } from '../Library';
-
-
-import { updateTaskOnServer, deleteTaskFromServer } from '../../store';
-
+import { updateTaskOnServer } from '../../store';
 import TaskCard from './TaskCard';
-import TaskForm from './TaskForm';
 
 class TaskColumn extends Component {
   constructor() {
@@ -56,26 +50,20 @@ class TaskColumn extends Component {
   }
 
   render() {
-    const { name, colId, ownTasks, deleteTask } = this.props;
-    const colIds = [1, 2, 3, 4];
-    const columns = {
-      '1': 'New Tasks',
-      '2': 'In-Progress',
-      '3': 'Review',
-      '4': 'Completed'
-    }
+    const { name, ownTasks } = this.props;
+    const { onDragStart, onDragOver, onDrop } = this;
     return (
       <div
         className='task-col'
-        onDragOver={this.onDragOver}
-        onDrop={this.onDrop}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
       >
         <h4 className='task-col-title'>{name}</h4>
         {
           ownTasks.map(task => {
             return (
               <div key={task.id}>
-                <TaskCard task={task} onDragStart={this.onDragStart}/>
+                <TaskCard task={task} onDragStart={onDragStart}/>
               </div>
             );
           })
@@ -92,8 +80,7 @@ const mapState = ({ tasks }, { colId }) => {
 
 const mapDispatch = (dispatch, { projectId }) => {
   return {
-    updateTask: (taskId, task) => dispatch(updateTaskOnServer(taskId, task, projectId)),
-    // deleteTask: (taskId) => dispatch(deleteTaskFromServer(taskId, projectId))
+    updateTask: (taskId, task) => dispatch(updateTaskOnServer(taskId, task, projectId))
   }
 };
 
