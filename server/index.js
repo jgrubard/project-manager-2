@@ -17,6 +17,15 @@ io.on('connection', socket => {
   // socket.on('user-online', userId => {
   //   userSocket[userId] = socket;
   // })
+
+  socket.on('project-created', project => {
+    socket.broadcast.emit('project-created', project);
+  });
+
+  socket.on('project-deleted', projectId => {
+    socket.broadcast.emit('project-deleted', projectId);
+  });
+
   socket.on('task-created', task => {
     socket.broadcast.emit('task-created', task);
   });

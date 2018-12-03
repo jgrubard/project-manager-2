@@ -1,7 +1,5 @@
 import axios from 'axios';
 import socket from '../../socket';
-// socket.emit();
-
 import { FETCH_TASKS, CREATE_TASK, UPDATE_TASK, DELETE_TASK } from './constants';
 
 const fetchTasks = tasks => ({ type: FETCH_TASKS, tasks });
@@ -35,11 +33,7 @@ export const updateTaskOnServer = (taskId, updatedTask, projectId) => async disp
     const response = await axios.put(`/api/projects/${projectId}/tasks/${taskId}`, updatedTask)
     const task = response.data;
     dispatch(updateTask(task));
-    // if(socket) {
     socket.emit('task-updated', task);
-      
-      // console.log(socket);
-    // }
   } catch(err) {
     console.log('ERROR UPDATING TASK:', err);
   }
