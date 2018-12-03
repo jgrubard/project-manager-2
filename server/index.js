@@ -21,8 +21,8 @@ io.on('connection', socket => {
     socket.broadcast.emit('task-created', task);
   });
 
-  socket.on('task-updated', data => {
-    socket.broadcast.emit('task-updated', data);
+  socket.on('task-updated', task => {
+    socket.broadcast.emit('task-updated', task);
   });
 
   socket.on('task-deleted', task => {

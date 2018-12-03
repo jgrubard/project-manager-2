@@ -36,7 +36,7 @@ export const updateTaskOnServer = (taskId, updatedTask, projectId) => async disp
     const task = response.data;
     dispatch(updateTask(task));
     // if(socket) {
-    socket.emit('task-updated', {task, projectId});
+    socket.emit('task-updated', task);
       
       // console.log(socket);
     // }

@@ -22,8 +22,6 @@ class MainProjectPage extends Component {
 
   async componentDidMount() {
     const { loadTasks, projectId, project, loadProject } = this.props;
-    // const project = projects.find(p => p.id === projectId);
-    // await console.log('PROJECT', project);
     if(project) loadProject(project);
     if(projectId) loadTasks(projectId);
   }
@@ -38,7 +36,6 @@ class MainProjectPage extends Component {
     console.log(project)
     if(prevProps.projectId !== projectId) loadTasks(projectId);
     if(project) loadProject(project);
-      // const project = projects.find(p => p.id === projectId);
   }
 
   toggleModal(ev) {
