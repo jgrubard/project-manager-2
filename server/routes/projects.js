@@ -70,6 +70,8 @@ app.put('/:projectId/tasks/:taskId', async (req, res, next) => {
     const task = await Task.findById(taskId);
     Object.assign(task, req.body);
     await task.save();
+    // const socket = something
+    // socket.broadcast.emit('updated-task', task);
     res.send(task);
   } catch(err) {
     next(err);

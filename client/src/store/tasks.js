@@ -1,11 +1,13 @@
 import axios from 'axios';
+import socket from '../../socket';
+// socket.emit();
 
 import { FETCH_TASKS, CREATE_TASK, UPDATE_TASK, DELETE_TASK } from './constants';
 
 const fetchTasks = tasks => ({ type: FETCH_TASKS, tasks });
-const createTask = task => ({ type: CREATE_TASK, task });
-const updateTask = task => ({ type: UPDATE_TASK, task });
-const deleteTask = taskId => ({ type: DELETE_TASK, taskId });
+export const createTask = task => ({ type: CREATE_TASK, task });
+export const updateTask = task => ({ type: UPDATE_TASK, task });
+export const deleteTask = taskId => ({ type: DELETE_TASK, taskId });
 
 export const getTasksFromServer = (projectId) => async dispatch => {
   try {
@@ -22,6 +24,7 @@ export const createTaskOnServer = (task) => async dispatch => {
     const response = await axios.post(`/api/projects/${task.projectId}/tasks`, task)
     const _task = response.data;
     dispatch(createTask(_task));
+    socket.emit('task-created', _task);
   } catch(err) {
     console.log('ERROR CREATING TASK:', err);
   }
@@ -32,6 +35,11 @@ export const updateTaskOnServer = (taskId, updatedTask, projectId) => async disp
     const response = await axios.put(`/api/projects/${projectId}/tasks/${taskId}`, updatedTask)
     const task = response.data;
     dispatch(updateTask(task));
+    // if(socket) {
+    socket.emit('task-updated', {task, projectId});
+      
+      // console.log(socket);
+    // }
   } catch(err) {
     console.log('ERROR UPDATING TASK:', err);
   }
@@ -41,6 +49,7 @@ export const deleteTaskFromServer = (taskId, projectId) => async dispatch => {
   try {
     await axios.delete(`/api/projects/${projectId}/tasks/${taskId}`);
     await dispatch(deleteTask(taskId));
+    socket.emit('task-deleted', taskId);
   } catch(err) {
     console.log('ERROR DELETING TASK:', err);
   }

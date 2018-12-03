@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TaskColumn from '../Tasks/TaskColumn';
 import CreateTask from '../Tasks/CreateTask';
 import EditProject from './EditProject';
-import { getTasksFromServer, clearTasks } from '../../store';
+import { getTasksFromServer, clearTasks, setProject } from '../../store';
 
 import { Button } from '../Library';
 
@@ -20,20 +20,25 @@ class MainProjectPage extends Component {
     this.toggleProjectModal = this.toggleProjectModal.bind(this);
   }
 
-  componentDidMount() {
-    const { loadTasks, projectId } = this.props;
+  async componentDidMount() {
+    const { loadTasks, projectId, project, loadProject } = this.props;
+    // const project = projects.find(p => p.id === projectId);
+    // await console.log('PROJECT', project);
+    if(project) loadProject(project);
     if(projectId) loadTasks(projectId);
   }
 
   componentWillUnmount() {
     this.props.clearTasks();
+    this.props.loadProject({});
   }
 
   componentDidUpdate(prevProps) {
-    const { projectId, loadTasks } = this.props;
-    if(prevProps.projectId !== projectId) {
-      loadTasks(projectId);
-    }
+    const { projectId, loadTasks, loadProject, project } = this.props;
+    console.log(project)
+    if(prevProps.projectId !== projectId) loadTasks(projectId);
+    if(project) loadProject(project);
+      // const project = projects.find(p => p.id === projectId);
   }
 
   toggleModal(ev) {
@@ -49,6 +54,7 @@ class MainProjectPage extends Component {
 
   render() {
     const { project } = this.props;
+    // console.log(project);
     const { toggleModal, toggleProjectModal } = this;
     if(!project) return null;
     return (
@@ -96,13 +102,14 @@ class MainProjectPage extends Component {
 
 const mapState = ({ projects }, { projectId }) => {
   const project = projects.find(p => p.id === projectId);
-  return { project }
+  return { project, projects }
 }
 
 const mapDispatch = dispatch => {
   return {
     loadTasks: (projectId) => dispatch(getTasksFromServer(projectId)),
-    clearTasks: () => dispatch(clearTasks())
+    clearTasks: () => dispatch(clearTasks()),
+    loadProject: (project) => dispatch(setProject(project))
   }
 }
 

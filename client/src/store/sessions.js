@@ -1,4 +1,6 @@
 import axios from 'axios';
+import socket from '../../socket';
+// socket.emit();
 
 import { GOT_USER } from './constants';
 import { addUser } from './users';
@@ -16,7 +18,6 @@ export const signup = (credentials) => async dispatch => {
     console.log(err);
     window.localStorage.removeItem('token');
   }
-
 }
 
 export const attemptLogin = (credentials, history) => async dispatch => {
@@ -35,7 +36,9 @@ export const getUserFromToken = (token, history) => async dispatch => {
     const response = await axios.get(`/api/sessions/${token}`)
     const user = await response.data;
     dispatch(gotUser(user));
-    // if(history) history.push(`/dashboard/${user.id}`);
+    // if(user.id) {
+    //   socket.emit('user-online', user.id);
+    // }
     return user;
   } catch(err) {
     console.log(err);

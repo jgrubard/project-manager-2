@@ -7,7 +7,6 @@ import Nav from './Nav';
 import Home from './Home';
 
 import AuthRoute from './Authorization/AuthRoute';
-// import Dashboard from './MainDashboard/Dashboard';
 import MainProjectPage from './Projects/MainProjectPage';
 
 class App extends Component {
@@ -28,9 +27,7 @@ class App extends Component {
   }
 
   render() {
-
     const AuthProject = AuthRoute(MainProjectPage);
-    // const AuthDashboard = AuthRoute(Dashboard);
     const { loggedIn } = this.props;
     const checkDashNav = loggedIn && !this.state.dashNavOpen ? ' dash-nav-move' : '';
     return (
@@ -39,8 +36,9 @@ class App extends Component {
           <Nav grabNavStatus={this.grabNavStatus} />
           <div className={`main-container${checkDashNav}`}>
             <Route exact path='/' render={({ history }) => <Home history={ history } />} />
-            {/* <Route exact path='/dashboard/:userId' render={({ match }) => <AuthDashboard userId={match.params.userId * 1} />} /> */}
-            <Route exact path='/:userId/projects/:projectId' render={({ match, location }) => <AuthProject userId={match.params.userId * 1} projectId={match.params.projectId * 1} location={location}/>} />
+            <Route exact path='/:userId/projects/:projectId' render={({ match, location }) => (
+              <AuthProject userId={match.params.userId * 1} projectId={match.params.projectId * 1} location={location}/>
+            )} />
           </div>
         </div>
       </Router>
