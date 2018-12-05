@@ -18,8 +18,40 @@ io.on('connection', socket => {
   //   userSocket[userId] = socket;
   // })
 
+  socket.on('join-project', (projectId, userId) => {
+      if(projectId) {
+        const room = `project-room-${projectId}`;
+        socket.join(room);
+        console.log(socket.rooms);
+        const allClients = io.sockets.adapter.rooms[room].sockets;
+        console.log('all clients:', allClients);
+        const userCount = Object.keys(allClients).length;
+        const usersLogged = userCount > 1 ? ' users' : ' user';
+        console.log(userCount + usersLogged + ' in ' + room);
+      }
+  });
+
+  socket.on('leave-project', (projectId, userId) => {
+    if(projectId) {
+      const room = `project-room-${projectId}`;
+      socket.leave(room);
+      console.log('user', socket.id, 'left', room);
+      console.log(socket.rooms);
+      // if(socket.rooms[room]) {
+      //   const allClients = io.sockets.adapter.rooms[room].sockets;
+      //   console.log('all clients:', allClients);
+      //   const userCount = Object.keys(allClients).length;
+      //   const usersLogged = userCount > 1 ? ' users' : ' user';
+      //   console.log(userCount + usersLogged + ' in ' + room);
+      // } else {
+      //   console.log('no more users, room disregarded');
+      // }
+    }
+});
+
   socket.on('project-created', project => {
     socket.broadcast.emit('project-created', project);
+    // socket.to(`project-room-${project.id}`).emit('project-created', project);
   });
 
   socket.on('project-deleted', projectId => {
@@ -27,15 +59,18 @@ io.on('connection', socket => {
   });
 
   socket.on('task-created', task => {
-    socket.broadcast.emit('task-created', task);
+    // socket.broadcast.emit('task-created', task);
+    socket.broadcast.to(`project-room-${task.projectId}`).emit('task-created', task);
   });
 
   socket.on('task-updated', task => {
-    socket.broadcast.emit('task-updated', task);
+    // socket.broadcast.emit('task-updated', task);
+    socket.broadcast.to(`project-room-${task.projectId}`).emit('task-updated', task);
   });
 
   socket.on('task-deleted', task => {
-    socket.broadcast.emit('task-deleted', task);
+    socket.broadcast.to(`project-room-${task.projectId}`).emit('task-created', task);
+    // socket.broadcast.emit('task-deleted', task);
   })
 
   socket.on('disconnect', () => console.log('client disconnected'))

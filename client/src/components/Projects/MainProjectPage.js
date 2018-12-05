@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TaskColumn from '../Tasks/TaskColumn';
 import CreateTask from '../Tasks/CreateTask';
 import EditProject from './EditProject';
-import { getTasksFromServer, clearTasks, setProject } from '../../store';
+import { getTasksFromServer, clearTasks, setCurrentProject } from '../../store';
 
 import { Button } from '../Library';
 
@@ -20,22 +20,31 @@ class MainProjectPage extends Component {
     this.toggleProjectModal = this.toggleProjectModal.bind(this);
   }
 
-  async componentDidMount() {
-    const { loadTasks, projectId, project, loadProject } = this.props;
-    if(project) loadProject(project);
+  componentDidMount() {
+    const { loadTasks, projectId, project, loadProject, user } = this.props;
+    // console.log('CDM - project & tasks will load:', !!projectId && !!project);
+    // const project = projects.find(p => p.id === project.id);
+    // console.log(projects);
+    console.log('CDM:', project, projectId)
     if(projectId) loadTasks(projectId);
+    if(project) loadProject(project, user.id);
   }
 
   componentWillUnmount() {
-    this.props.clearTasks();
-    this.props.loadProject({});
+    const { clearTasks, loadProject, project } = this.props;
+    clearTasks();
+    if(project) loadProject({}, null, project.id);
   }
 
   componentDidUpdate(prevProps) {
-    const { projectId, loadTasks, loadProject, project } = this.props;
-    console.log(project)
-    if(prevProps.projectId !== projectId) loadTasks(projectId);
-    if(project) loadProject(project);
+    const { projectId, loadTasks, loadProject, project, user } = this.props;
+    console.log('CDU - project & tasks will load:', prevProps.projectId !== projectId && project);
+    if(prevProps.projectId !== projectId) {
+      loadTasks(projectId);
+    }
+    if(project) {
+      loadProject(project, user.id);
+    }
   }
 
   toggleModal(ev) {
@@ -51,14 +60,12 @@ class MainProjectPage extends Component {
 
   render() {
     const { project } = this.props;
-    // console.log(project);
     const { toggleModal, toggleProjectModal } = this;
     if(!project) return null;
     return (
       <div className='main-page-container'>
         <div className='project-nav'>
           <span className='project-title'>{project.name}</span>
-          {/* <span onClick={toggleProjectModal} style={{ float: 'right', color: 'darkgreen', cursor: 'pointer' }} className='fas fa-cog'></span> */}
           <Button
             label='Project Settings'
             onClick={toggleProjectModal}
@@ -97,16 +104,16 @@ class MainProjectPage extends Component {
   }
 }
 
-const mapState = ({ projects }, { projectId }) => {
+const mapState = ({ user, projects }, { projectId }) => {
   const project = projects.find(p => p.id === projectId);
-  return { project, projects }
+  return { user, project, projects }
 }
 
 const mapDispatch = dispatch => {
   return {
     loadTasks: (projectId) => dispatch(getTasksFromServer(projectId)),
     clearTasks: () => dispatch(clearTasks()),
-    loadProject: (project) => dispatch(setProject(project))
+    loadProject: (project, userId, oldProjectId) => dispatch(setCurrentProject(project, userId, oldProjectId))
   }
 }
 
