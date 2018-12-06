@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TaskColumn from '../Tasks/TaskColumn';
 import CreateTask from '../Tasks/CreateTask';
 import EditProject from './EditProject';
-import { getTasksFromServer, clearTasks } from '../../store';
+import { getTasksFromServer, clearTasks, setCurrentProject } from '../../store';
 
 import { Button } from '../Library';
 
@@ -21,18 +21,29 @@ class MainProjectPage extends Component {
   }
 
   componentDidMount() {
-    const { loadTasks, projectId } = this.props;
+    const { loadTasks, projectId, project, loadProject, user } = this.props;
+    // console.log('CDM - project & tasks will load:', !!projectId && !!project);
+    // const project = projects.find(p => p.id === project.id);
+    // console.log(projects);
+    console.log('CDM:', project, projectId)
     if(projectId) loadTasks(projectId);
+    if(project) loadProject(project, user.id);
   }
 
   componentWillUnmount() {
-    this.props.clearTasks();
+    const { clearTasks, loadProject, project } = this.props;
+    clearTasks();
+    if(project) loadProject({}, null, project.id);
   }
 
   componentDidUpdate(prevProps) {
-    const { projectId, loadTasks } = this.props;
+    const { projectId, loadTasks, loadProject, project, user } = this.props;
+    console.log('CDU - project & tasks will load:', prevProps.projectId !== projectId && project);
     if(prevProps.projectId !== projectId) {
       loadTasks(projectId);
+    }
+    if(project) {
+      loadProject(project, user.id);
     }
   }
 
@@ -55,7 +66,6 @@ class MainProjectPage extends Component {
       <div className='main-page-container'>
         <div className='project-nav'>
           <span className='project-title'>{project.name}</span>
-          {/* <span onClick={toggleProjectModal} style={{ float: 'right', color: 'darkgreen', cursor: 'pointer' }} className='fas fa-cog'></span> */}
           <Button
             label='Project Settings'
             onClick={toggleProjectModal}
@@ -94,15 +104,16 @@ class MainProjectPage extends Component {
   }
 }
 
-const mapState = ({ projects }, { projectId }) => {
+const mapState = ({ user, projects }, { projectId }) => {
   const project = projects.find(p => p.id === projectId);
-  return { project }
+  return { user, project, projects }
 }
 
 const mapDispatch = dispatch => {
   return {
     loadTasks: (projectId) => dispatch(getTasksFromServer(projectId)),
-    clearTasks: () => dispatch(clearTasks())
+    clearTasks: () => dispatch(clearTasks()),
+    loadProject: (project, userId, oldProjectId) => dispatch(setCurrentProject(project, userId, oldProjectId))
   }
 }
 

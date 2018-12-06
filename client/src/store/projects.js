@@ -1,11 +1,12 @@
 import axios from 'axios';
+import socket from '../../socket';
 
 import { FETCH_PROJECTS, CREATE_PROJECT, UPDATE_PROJECT, DELETE_PROJECT } from './constants';
 
 const fetchProjects = projects => ({ type: FETCH_PROJECTS, projects });
-const createProject = project => ({ type: CREATE_PROJECT, project });
-const updateProject = project => ({ type: UPDATE_PROJECT, project });
-const deleteProject = id => ({ type: DELETE_PROJECT, id });
+export const createProject = project => ({ type: CREATE_PROJECT, project });
+export const updateProject = project => ({ type: UPDATE_PROJECT, project });
+export const deleteProject = id => ({ type: DELETE_PROJECT, id });
 
 export const fetchProjectsFromServer = (userId) => async dispatch => {
   if(!userId) return null;
@@ -33,6 +34,7 @@ export const updateProjectOnServer = (proj, userId, usersToAdd, usersToRemove) =
     const response = await axios.put(`/api/projects/${userId}/${proj.id}`, { proj, usersToAdd, usersToRemove });
     const project = response.data;
     dispatch(updateProject(project));
+    socket.emit('project-created', project);
   } catch(err) {
     console.log('ERROR UPDATING PROJECT', err);
   }
@@ -42,6 +44,7 @@ export const deleteProjectFromServer = (projectId, userId) => async dispatch => 
   try {
     await axios.delete(`/api/projects/${userId}/${projectId}`)
     dispatch(deleteProject(projectId));
+    socket.emit('project-deleted', projectId);
   } catch(err) {
     next(err);
   }

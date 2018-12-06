@@ -52,7 +52,7 @@ User.authenticate = async function(email, password) {
 User.exchangeTokenForUser = async function(token) {
   try {
     const id = jwt.decode(token, process.env.JWT_KEY).id;
-    const user = await this.findById(id);
+    const user = await this.findByPk(id);
     if(user) {
       return user;
     }
