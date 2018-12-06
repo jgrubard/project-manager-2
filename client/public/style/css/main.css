@@ -16,4 +16,8 @@ body .main-container {
 
 .main-page-container {
   padding: 10px;
-  margin-top: 55px; }
+  margin-top: 55px;
+  height: 100%; }
+
+.home-text {
+  margin: 20 10; }

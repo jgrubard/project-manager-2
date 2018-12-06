@@ -44,3 +44,6 @@
   box-shadow: 0px 0px 10px rgba(60, 60, 60, 0.4); }
   .task-container:hover {
     background-color: #d7f8d7; }
+
+.task-name {
+  font-size: 10pt; }

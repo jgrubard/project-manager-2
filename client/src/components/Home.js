@@ -4,14 +4,29 @@ const Home = () => {
   return (
     <div>
       <div className='main-page-container'>
-        <h2>Project Manager</h2>
-        { lorem.map((p, i) => <p style={{ margin: '10 0' }} key={i}>{p}</p>) }
+        <h2 style={{ textAlign: 'center' }}>Welcome to groop!</h2>
+        { welcomeText.map((p, i) => <p className='home-text' key={i}>{p}</p>) }
+        {/* { lorem.map((p, i) => <p style={{ margin: '10 0' }} key={i}>{p}</p>) } */}
       </div>
     </div>
   );
 }
 
 export default Home;
+
+const welcomeText = [
+  'Hello there!',
+
+  'Log in or sign up to begin using groop!',
+
+  'groop is a web application that allows users to manage any type of project they are working on. Each project is made up of different tasks, and every task can be assigned to a column, depending on its current progress.',
+
+  'Of course, you can work alone, but using group, you can add other users to your project. When you or others are added, the project will automatically appear in your settings.',
+
+  'Creating and changing tasks will also update live for every user currently viewing the project.',
+
+  'Start using groop today!'
+];
 
 const lorem = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis pulvinar magna, ut ullamcorper dui. Aenean sed erat ac odio imperdiet tempor sed eu est. Cras suscipit imperdiet eros, quis feugiat massa bibendum sit amet. Praesent porttitor, nisl ac mattis pretium, dui tortor imperdiet sem, vel lacinia velit orci blandit dolor. Duis id lectus at arcu sagittis gravida vitae ut diam. Vivamus sed quam sed tellus consectetur ornare a ut nunc. Nullam semper eleifend tristique. Vestibulum tempor vel magna sed consectetur. Nullam vulputate arcu et risus tincidunt, vel tristique mauris sollicitudin. Nam feugiat vitae tortor sed rhoncus. Duis varius quis lorem non euismod. Nulla eget tristique ipsum. Morbi molestie arcu quis eros pharetra, eu interdum mauris sagittis. Nulla sagittis ipsum eu mi viverra, ac venenatis nunc tristique. Donec faucibus viverra mattis.',

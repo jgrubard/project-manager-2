@@ -29,7 +29,7 @@ class TaskCard extends Component {
           className='task-container'
           onDragStart={(ev) => onDragStart(ev, task.id)}
         >
-          {task.name}
+          <span className='task-name'>{task.name}</span>
           <br />
           <br />
           <Button

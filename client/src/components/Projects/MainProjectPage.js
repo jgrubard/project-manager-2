@@ -22,10 +22,6 @@ class MainProjectPage extends Component {
 
   componentDidMount() {
     const { loadTasks, projectId, project, loadProject, user } = this.props;
-    // console.log('CDM - project & tasks will load:', !!projectId && !!project);
-    // const project = projects.find(p => p.id === project.id);
-    // console.log(projects);
-    console.log('CDM:', project, projectId)
     if(projectId) loadTasks(projectId);
     if(project) loadProject(project, user.id);
   }

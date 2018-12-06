@@ -52,9 +52,10 @@ class TaskColumn extends Component {
   render() {
     const { name, ownTasks } = this.props;
     const { onDragStart, onDragOver, onDrop } = this;
+    console.log(window);
     return (
       <div
-        className='task-col'
+        className={`task-col`}
         onDragOver={onDragOver}
         onDrop={onDrop}
       >

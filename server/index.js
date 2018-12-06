@@ -14,20 +14,17 @@ let io = require('socket.io')(server);
 
 io.on('connection', socket => {
   console.log('made socket connection', socket.id);
-  // socket.on('user-online', userId => {
-  //   userSocket[userId] = socket;
-  // })
 
   socket.on('join-project', (projectId, userId) => {
       if(projectId) {
         const room = `project-room-${projectId}`;
         socket.join(room);
-        console.log(socket.rooms);
-        const allClients = io.sockets.adapter.rooms[room].sockets;
-        console.log('all clients:', allClients);
-        const userCount = Object.keys(allClients).length;
-        const usersLogged = userCount > 1 ? ' users' : ' user';
-        console.log(userCount + usersLogged + ' in ' + room);
+        // console.log(socket.rooms);
+        // const allClients = io.sockets.adapter.rooms[room].sockets;
+        // console.log('all clients:', allClients);
+        // const userCount = Object.keys(allClients).length;
+        // const usersLogged = userCount > 1 ? ' users' : ' user';
+        // console.log(userCount + usersLogged + ' in ' + room);
       }
   });
 
@@ -35,17 +32,8 @@ io.on('connection', socket => {
     if(projectId) {
       const room = `project-room-${projectId}`;
       socket.leave(room);
-      console.log('user', socket.id, 'left', room);
-      console.log(socket.rooms);
-      // if(socket.rooms[room]) {
-      //   const allClients = io.sockets.adapter.rooms[room].sockets;
-      //   console.log('all clients:', allClients);
-      //   const userCount = Object.keys(allClients).length;
-      //   const usersLogged = userCount > 1 ? ' users' : ' user';
-      //   console.log(userCount + usersLogged + ' in ' + room);
-      // } else {
-      //   console.log('no more users, room disregarded');
-      // }
+      // console.log('user', socket.id, 'left', room);
+      // console.log(socket.rooms);
     }
 });
 

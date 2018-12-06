@@ -8,6 +8,8 @@
     "url": "https://github.com/jgrubard/project-manager-2"
   },
   "scripts": {
+    "start": "node server",
+    "postinstall": "npm run webpack",
     "webpack": "webpack",
     "scss": "node-sass --watch client/public/style/scss -o client/public/style/css",
     "seed": "node server/db/seed.js",
