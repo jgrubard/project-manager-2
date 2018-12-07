@@ -4,10 +4,9 @@
 
 ### About groop
 
-groop is an application to be used as a project manager.
+groop is a project management web application where users can create projects, include teammates on these projects, and create/organize tasks. Users see real time project modifications using Socket.io.
 
-### Using the web application.
-* Hosted on Heroku, the database resets itself, so do not expect to retain your data for longer than a few hours.
+Technologies: Express, Sequelize, PostgreSQL, React, Redux, Socket.io, JWT
 
 ### Installing the app and running locally
 If you would like to run the application locally, clone the Github repo [https://github.com/jgrubard/project-manager-2](https://github.com/jgrubard/project-manager-2) to your machine.
